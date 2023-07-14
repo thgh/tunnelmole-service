@@ -2,9 +2,9 @@
   "name": "tunnelmole-service",
   "version": "0.0.1",
   "description": "Tunnelmole service",
-  "main": "srv/index.js",
+  "main": "./dist/srv/index.js",
   "scripts": {
-    "build": "tsc -p ./",
+    "build": "bunchee srv/index.ts",
     "watch": "tsc -p ./ -w",
     "start": "npm run watch & nodemon dist/srv/index.js",
     "fix": "prettier --write .",
@@ -14,20 +14,30 @@
     "docker:run": "docker run -it -e PORT=80 -e TUNNELMOLE_API_KEYS=example-only-delete-in-production -p 80:80 tunnelmole",
     "start-prod": "node dist/srv/index.js"
   },
+  "exports": {
+    "module": "./dist/srv/index.esm.js",
+    "import": "./dist/srv/index.mjs",
+    "require": "./dist/srv/index.js"
+  },
+  "files": [
+    "dist"
+  ],
   "author": "",
   "license": "AGPL-3.0-or-later",
   "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
     "@types/express": "^4.17.6",
     "@types/moment": "^2.13.0",
     "@types/nanoid": "^2.1.0",
     "@types/stripe": "^7.13.23",
     "@types/ws": "^7.2.4",
+    "mysql2": "^3.2.0",
     "body-parser": "^1.19.0",
     "capitalize": "^2.0.3",
-    "express": "^4.17.1",
     "in_array": "^1.1.0",
     "moment-timezone": "^0.5.34",
-    "mysql2": "^3.2.0",
     "nanoid": "^3.1.7",
     "randomstring": "^1.1.5",
     "reverse-dns-lookup": "^2.0.0",
@@ -35,9 +45,8 @@
     "stripe": "^8.55.0",
     "toml": "^3.0.0",
     "typescript": "^4.9.3",
-    "ws": "^7.2.5"
-  },
-  "devDependencies": {
+    "ws": "^7.2.5",
+    "bunchee": "^3.5.1",
     "nodemon": "^3.0.1",
     "prettier": "^3.0.0"
   }
